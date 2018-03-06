@@ -78,9 +78,10 @@ if ARGV[4] && ARGV[4].casecmp('-target')
 #generate random list
   list = []
   while list.length < 8
-    x = ( 1+rand(8) + 96).chr
-    y = 1+rand(8)
-    list.push(x+y.to_s) unless list.include? location && list.include?(x+y.to_s)
+    coord = (1+rand(8) + 96).chr + (1+rand(8)).to_s
+    unless list.include? location || list.include?(coord)
+      list.push(coord)
+    end
   end
 # end generation of random list
 
