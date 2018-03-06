@@ -61,51 +61,54 @@ def output_moves(piece_type, location, moves)
   end
 
   board_possible_moves = all_possible_moves.reject { |p| p[0] < 1 || p[1] < 1 || p[0] > 8 || p[1] > 8 }
-
+  movesList = []
    board_possible_moves.collect { |m|
     x = (m[0] + 96).chr
     y = m[1]
-    "#{x}#{y}"
-  }.join(', ')
-
+    movesList<< x + y.to_s
+  }
+  movesList
 end
+
+puts 'Board possible Moves are: '
+puts output_moves(piece_type, location, moves)
 
 if ARGV[4] && ARGV[4].casecmp('-target')
 
 #generate random list
   list = []
-  while list.length < 9
+  while list.length < 8
     x = ( 1+rand(8) + 96).chr
     y = 1+rand(8)
-    list.push(x+y.to_s) unless list.include? location
-    list.uniq!
+    list.push(x+y.to_s) unless list.include? location && list.include?(x+y.to_s)
   end
-  list
 # end generation of random list
 
-  puts 'Board possible Moves are: '+ output_moves(piece_type, location, moves)
   puts 'Randomly generated 8 opposition Locations are:'
   puts list
 
   #method to check kills
-  #def killEnemy(piece_type, location_update, moves)
-
-  #end
-
-
-  found = false
-  moveCount = 0
-  while !found
-    moveCount = moveCount + 1
-    #need to wrap in a function to call it recursively
-    list.each do |loc|
-      if output_moves(piece_type, location, moves).include?(loc)
-        puts 'opposition '+ loc + " Killed in #{moveCount} move/s"
-        found = true
-        exit
+  def killEnemy(piece_type, location_list, list, moves, mCount)
+    found = false
+    iteration_list = []
+    location_list.each do |pos|
+      output_moves(piece_type, pos, moves).each do |loc|
+        iteration_list << loc
+        if list.include?(loc)
+          puts 'opposition '+ loc + " Killed in #{mCount} move/s"
+          found = true
+          exit
+        end
       end
     end
-    #killEnemy(piece_type, location, moves)
+    unless found
+      mCount = mCount + 1
+      killEnemy(piece_type, iteration_list, list, moves, mCount)
+    end
   end
+  location_list = []
+  moveCount = 1
+  location_list << location
+  killEnemy(piece_type, location_list, list, moves, moveCount)
 
 end
