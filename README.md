@@ -3,7 +3,7 @@ This program is an extension to the existing chessercise
 
 Usage: $ruby chessercise-target.rb -piece 'knight' -location 'd2' -target
 
-Please provide 4 or 5 arguments while running the program
+Please provide 2 or 3 arguments while running the program
 
 Please use the argument '-target' to get the opposition location that can be killed in the shortest move/s.
 
@@ -11,7 +11,10 @@ Please use the argument '-target' to get the opposition location that can be kil
 if the opposing location is not as same as the piece location and if the locations are unique.
 </p>
 
-<p> Once we have the list of the locations with us, we will be checking if any of the locations match the 
-1st move of the piece type given or not. If found, we mark it that the location is killed in first move.
-Else, we will be checking the valid moves of the 1st moves and checking with the positions of the list recursively. 
-</p>
+<p>get_most_distant_tile method returns the distant opposing piece </p>
+
+
+<p> Once we have the most distant location of the opposition of the locations with us, we will be searching for the 
+most distant tile recursively </p>
+
+<p>Graph search such as Breadth First Search implementation would be ideal for more performance</p>

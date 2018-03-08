@@ -1,6 +1,13 @@
+class Chessercise
 #input (-piece 'Knight' -location 'd5')
-unless ARGV.length >= 4
-  puts 'please enter all the input data'
+unless ARGV.length >= 2
+  message =  'please enter all the input data'
+  puts message
+  exit 1
+end
+
+unless %w{knight rook queen}.include?(ARGV[0].downcase)
+  puts 'please enter a valid piece type. KNIGHT or ROOK or QUEEN'
   exit
 end
 
@@ -27,16 +34,10 @@ moves = {
              { x: -1, y: -2, steps: 1 },
              { x: -2, y: -1, steps: 1 }]
 }
-piece_type = ARGV[1].to_sym.downcase
-location = ARGV[3].downcase
+piece_type = ARGV[0].to_sym.downcase
+location = ARGV[1].downcase
 
-unless %w{knight rook queen}.include?(ARGV[1].downcase)
-  puts 'please enter a valid piece type. KNIGHT or ROOK or QUEEN'
-  exit
-end
-
-
-
+#Calculate Board possible moves
 def output_moves(piece_type, location, moves)
   #setting up location coordinates
   location_coords = location.split(//)
@@ -70,10 +71,52 @@ def output_moves(piece_type, location, moves)
   movesList
 end
 
-puts 'Board possible Moves are: '
-puts output_moves(piece_type, location, moves)
+  def get_most_distant_tile(piece_location, tiles)
+    piece = piece_location.split(//)
+    piece_x = piece[0].ord
+    piece_y = piece[1].to_i
+    tiles.collect do |tile|
+      distance = 0
+      opp = tile.split(//)
+      opp_x = opp[0].ord
+      opp_y = opp[1].to_i
+      distance = (opp_x - piece_x).abs + (opp_y - piece_y).abs
+      [tile, distance]
+    end.sort do |m1, m2|
+      c = (m1[1] <=> m2[1])
+      c == 0 ? (m1[0] <=> m2[0]) : c
+    end.last
 
-if ARGV[4] && ARGV[4].casecmp('-target')
+  end
+
+#method to print the least number of moves required for the distant opposition
+  def killEnemy(piece_type, location_list, list, moves, mCount, enemy)
+    found = false
+    iteration_list = []
+    location_list.each do |pos|
+      output_moves(piece_type, pos, moves).each do |loc|
+        iteration_list << loc
+        if enemy == loc
+          puts 'minimum number of moves to kill opposition at the location '+ loc + ": #{mCount} move/s"
+          found = true
+          exit
+        end
+      end
+    end
+    unless found
+      # removing duplicates
+      iteration_list.uniq!
+      puts "Not found after #{mCount} move/s, trying moves from: #{iteration_list}"
+      mCount = mCount + 1
+      killEnemy(piece_type, iteration_list, list, moves, mCount, enemy)
+    end
+  end
+
+  @chess_moves = Chessercise.new
+  puts 'Board possible Moves are: '
+  puts  @chess_moves.output_moves(piece_type, location, moves)
+
+if ARGV[2] && ARGV[2].casecmp('-target')
 
 #generate random list
   list = []
@@ -83,33 +126,16 @@ if ARGV[4] && ARGV[4].casecmp('-target')
       list.push(coord)
     end
   end
-# end generation of random list
-
   puts 'Randomly generated 8 opposition Locations are:'
   puts list
+# end generation of random list
 
-  #method to check kills
-  def killEnemy(piece_type, location_list, list, moves, mCount)
-    found = false
-    iteration_list = []
-    location_list.each do |pos|
-      output_moves(piece_type, pos, moves).each do |loc|
-        iteration_list << loc
-        if list.include?(loc)
-          puts 'opposition '+ loc + " Killed in #{mCount} move/s"
-          found = true
-          exit
-        end
-      end
-    end
-    unless found
-      mCount = mCount + 1
-      killEnemy(piece_type, iteration_list, list, moves, mCount)
-    end
-  end
+  target = @chess_moves.get_most_distant_tile(location, list)
+  puts 'most distant tile: ' + target[0]
+
   location_list = []
   moveCount = 1
   location_list << location
-  killEnemy(piece_type, location_list, list, moves, moveCount)
-
+  @chess_moves.killEnemy(piece_type, location_list, list, moves, moveCount, target[0])
+end
 end
