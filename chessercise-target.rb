@@ -1,4 +1,4 @@
-class Chessercise
+class ChesserciseTarget
 #input (-piece 'Knight' -location 'd5')
 unless ARGV.length >= 2
   message =  'please enter all the input data'
@@ -99,7 +99,7 @@ end
         if enemy == loc
           puts 'minimum number of moves to kill opposition at the location '+ loc + ": #{mCount} move/s"
           found = true
-          exit
+          return [found, mCount]
         end
       end
     end
@@ -112,7 +112,7 @@ end
     end
   end
 
-  @chess_moves = Chessercise.new
+  @chess_moves = ChesserciseTarget.new
   puts 'Board possible Moves are: '
   puts  @chess_moves.output_moves(piece_type, location, moves)
 

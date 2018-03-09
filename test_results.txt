@@ -1,0 +1,29 @@
+Board possible Moves are:
+b1
+f1
+b3
+f3
+c4
+e4
+["knight", "d2"]
+2
+Loaded suite chessercise_test
+Started
+.Not found after 1 move/s, trying moves from: ["d2", "a3", "c3"]
+Not found after 2 move/s, trying moves from: ["b1", "f1", "b3", "f3", "c4", "e4", "c2", "b5", "d1", "a2", "e2", "a4", "d5"]
+Not found after 3 move/s, trying moves from: ["d2", "a3", "c3", "h2", "e3", "g3", "a1", "c1", "d4", "a5", "c5", "e1", "g1", "h4", "e5", "g5", "b2", "b6", "d6", "f2", "f6", "b4", "a7", "c7", "f4", "e7"]
+Not found after 4 move/s, trying moves from: ["b1", "f1", "b3", "f3", "c4", "e4", "c2", "b5", "d1", "a2", "e2", "a4", "d5", "g4", "g2", "f5", "h1", "h5", "d3", "c6", "e6", "b7", "a6", "d7", "h3", "g6", "f7", "h7", "a8", "c8", "e8", "g8"]
+minimum number of moves to kill opposition at the location h8: 5 move/s
+.Not found after 1 move/s, trying moves from: ["d2", "a3", "c3"]
+Not found after 2 move/s, trying moves from: ["b1", "f1", "b3", "f3", "c4", "e4", "c2", "b5", "d1", "a2", "e2", "a4", "d5"]
+Not found after 3 move/s, trying moves from: ["d2", "a3", "c3", "h2", "e3", "g3", "a1", "c1", "d4", "a5", "c5", "e1", "g1", "h4", "e5", "g5", "b2", "b6", "d6", "f2", "f6", "b4", "a7", "c7", "f4", "e7"]
+Not found after 4 move/s, trying moves from: ["b1", "f1", "b3", "f3", "c4", "e4", "c2", "b5", "d1", "a2", "e2", "a4", "d5", "g4", "g2", "f5", "h1", "h5", "d3", "c6", "e6", "b7", "a6", "d7", "h3", "g6", "f7", "h7", "a8", "c8", "e8", "g8"]
+minimum number of moves to kill opposition at the location h8: 5 move/s
+.
+
+Finished in 0.005946073 seconds.
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+3 tests, 3 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+100% passed
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+504.53 tests/s, 504.53 assertions/s
